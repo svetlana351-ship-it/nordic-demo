@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NORDIC designer — дизайн интерьера в скандинавском стиле (демо)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F1EC;
+    --green:#2D4A3E;
+    --text:#4A4F4D;
+    --white:#FFFFFF;
+    --line:rgba(45,74,62,.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-size:16px;
+    line-height:1.65;
+  }
+  h1,h2,h3,.serif{font-family:'Playfair Display',serif;color:var(--green);font-weight:600;}
+  img{display:block;max-width:100%;}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px;}
+  section{padding:96px 0;}
+  .section-title{font-size:clamp(28px,4vw,44px);margin-bottom:16px;}
+  .section-sub{max-width:640px;margin-bottom:48px;}
+  .btn{
+    display:inline-block;padding:16px 32px;font-size:15px;font-weight:600;
+    text-decoration:none;cursor:pointer;border:1px solid var(--green);
+    transition:background .25s,color .25s;text-align:center;
+  }
+  .btn-primary{background:var(--green);color:var(--white);}
+  .btn-primary:hover{background:#233b31;}
+  .btn-outline{background:transparent;color:var(--green);}
+  .btn-outline:hover{background:var(--green);color:var(--white);}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.visible{opacity:1;transform:none;}
+
+  /* Шапка */
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(245,241,236,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  }
+  .header-in{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--green);font-weight:600;}
+  .logo-mark{width:34px;height:34px;border:1.5px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;}
+  nav.main-nav{display:flex;gap:28px;}
+  nav.main-nav a{color:var(--text);text-decoration:none;font-size:14px;}
+  nav.main-nav a:hover{color:var(--green);}
+  .header-phone{font-size:14px;color:var(--text);text-decoration:none;}
+  .header-cta{padding:10px 22px;font-size:13px;}
+  .burger{display:none;background:none;border:none;cursor:pointer;padding:8px;}
+  .burger span{display:block;width:24px;height:2px;background:var(--green);margin:5px 0;}
+
+  /* Hero */
+  .hero{
+    position:relative;min-height:92vh;display:flex;align-items:center;
+    background:url('img/photo-1.jpg') center/cover no-repeat;
+  }
+  .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,241,236,.95) 0%,rgba(245,241,236,.75) 45%,rgba(245,241,236,.15) 100%);}
+  .hero-content{position:relative;max-width:600px;padding:80px 0;}
+  .hero h1{font-size:clamp(36px,5.5vw,64px);line-height:1.15;margin-bottom:20px;}
+  .hero p{margin-bottom:36px;max-width:480px;}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+
+  /* О студии + цифры */
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:start;}
+  .about-photo{position:relative;}
+  .about-photo img{width:100%;height:100%;object-fit:cover;min-height:420px;}
+  .about-photo::after{content:'';position:absolute;top:-20px;left:-20px;width:100%;height:100%;border:1px solid var(--line);z-index:-1;}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px;}
+  .stat{border:1px solid var(--line);padding:28px 16px;text-align:center;background:var(--white);}
+  .stat b{display:block;font-family:'Playfair Display',serif;font-size:36px;color:var(--green);font-weight:600;}
+  .stat span{font-size:13px;}
+
+  /* Подход */
+  .approach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .approach-card{background:var(--white);border:1px solid var(--line);}
+  .approach-card img{width:100%;height:240px;object-fit:cover;}
+  .approach-card div{padding:24px;}
+  .approach-card h3{font-size:20px;margin-bottom:8px;}
+  .approach-card p{font-size:14px;}
+
+  /* Пакеты */
+  .packages{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:24px;align-items:center;}
+  .package-side{display:grid;gap:16px;}
+  .package-side img{width:100%;height:190px;object-fit:cover;}
+  .package-main{background:var(--white);border:1px solid var(--green);padding:40px;text-align:center;}
+  .package-main h3{font-size:26px;margin-bottom:16px;}
+  .package-main ul{list-style:none;text-align:left;margin:24px auto;max-width:320px;}
+  .package-main li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;}
+  .package-main li::before{content:'—';color:var(--green);margin-right:10px;}
+  .package-price{font-family:'Playfair Display',serif;font-size:22px;color:var(--green);margin:20px 0;}
+
+  /* Этапы */
+  .steps{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;position:relative;margin-top:24px;}
+  .steps::before{content:'';position:absolute;top:26px;left:4%;right:4%;height:1px;background:var(--line);}
+  .step{text-align:center;padding:0 6px;}
+  .step-num{width:52px;height:52px;border-radius:50%;border:1px solid var(--green);background:var(--bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Playfair Display',serif;font-size:22px;color:var(--green);position:relative;z-index:1;}
+  .step h4{font-size:15px;color:var(--green);margin-bottom:6px;}
+  .step p{font-size:12px;}
+  .supervision{margin-top:48px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;border:1px solid var(--line);padding:28px 32px;background:var(--white);}
+
+  /* Портфолио */
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .work-card{background:var(--white);border:1px solid var(--line);}
+  .work-card img{width:100%;height:260px;object-fit:cover;}
+  .work-body{padding:24px;}
+  .work-body h3{font-size:20px;margin-bottom:8px;}
+  .work-body p{font-size:14px;margin-bottom:12px;}
+  .work-budget{font-family:'Playfair Display',serif;color:var(--green);font-size:18px;margin-bottom:16px;}
+  .work-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .work-actions .btn{padding:12px 20px;font-size:13px;}
+
+  /* Кейс месяца */
+  .case-box{background:var(--white);border:1px solid var(--line);padding:48px;}
+  .case-compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;}
+  .case-compare figure{position:relative;}
+  .case-compare img{width:100%;height:320px;object-fit:cover;}
+  .case-compare figcaption{position:absolute;top:16px;left:16px;background:var(--green);color:var(--white);padding:6px 16px;font-size:13px;}
+  .case-facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+  .case-facts div{border:1px solid var(--line);padding:16px;text-align:center;}
+  .case-facts b{display:block;color:var(--green);font-family:'Playfair Display',serif;font-size:20px;}
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px;font-size:14px;}
+  .case-cols h4{color:var(--green);margin-bottom:10px;font-size:15px;}
+  .case-cols ul{list-style:none;}
+  .case-cols li{padding:5px 0;}
+  .case-cols li::before{content:'—';color:var(--green);margin-right:8px;}
+
+  /* Отзывы */
+  .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .review{background:var(--white);border:1px solid var(--line);display:flex;flex-direction:column;}
+  .review img{width:100%;height:200px;object-fit:cover;}
+  .review-body{padding:24px;display:flex;flex-direction:column;flex:1;}
+  .review-body p{font-size:14px;font-style:italic;margin-bottom:16px;flex:1;}
+  .review-author{font-size:13px;color:var(--green);font-weight:600;}
+
+  /* Форма расчёта */
+  .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .calc-form{background:var(--white);border:1px solid var(--line);padding:40px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:13px;margin-bottom:6px;color:var(--green);}
+  .field input,.field select,.field textarea{
+    width:100%;padding:14px 16px;border:1px solid var(--line);background:var(--bg);
+    font-family:inherit;font-size:15px;color:var(--text);
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:1px solid var(--green);}
+  .calc-list{list-style:none;}
+  .calc-list li{padding:12px 0;border-bottom:1px solid var(--line);font-size:15px;}
+  .calc-list li::before{content:'—';color:var(--green);margin-right:10px;}
+  .calc-note{font-size:13px;margin-top:20px;}
+
+  /* Команда */
+  .team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px 64px;}
+  .member{display:flex;gap:24px;align-items:flex-start;}
+  .member img{width:120px;height:150px;object-fit:cover;}
+  .member h3{font-size:19px;margin-bottom:4px;}
+  .member .role{color:var(--green);font-size:13px;font-weight:600;margin-bottom:8px;}
+  .member p{font-size:13px;}
+
+  /* CTA полоса */
+  .cta-strip{background:var(--green);color:var(--white);text-align:center;padding:72px 24px;}
+  .cta-strip h2{color:var(--white);font-size:clamp(26px,3.5vw,38px);margin-bottom:16px;}
+  .cta-strip p{margin-bottom:28px;opacity:.9;}
+  .cta-strip .btn{border-color:var(--white);color:var(--white);}
+  .cta-strip .btn:hover{background:var(--white);color:var(--green);}
+
+  /* FAQ */
+  .faq{max-width:820px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 4px;font-size:17px;font-family:inherit;color:var(--green);text-align:left;}
+  .faq-q::after{content:'+';font-size:24px;font-family:'Playfair Display',serif;transition:transform .3s;}
+  .faq-item.open .faq-q::after{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .faq-a p{padding:0 4px 22px;font-size:15px;}
+
+  /* Финальная форма */
+  .final-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+  .final-grid img{width:100%;height:420px;object-fit:cover;}
+  .final-grid .calc-form{border:none;background:transparent;padding:0;}
+
+  /* Футер */
+  footer{background:var(--green);color:var(--white);padding:56px 0 32px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+  footer .logo{color:var(--white);}
+  footer .logo-mark{border-color:var(--white);}
+  footer h4{font-size:14px;margin-bottom:14px;color:var(--white);}
+  footer a{color:rgba(255,255,255,.85);text-decoration:none;font-size:14px;display:block;padding:4px 0;}
+  footer a:hover{color:var(--white);}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.2);padding-top:24px;font-size:13px;color:rgba(255,255,255,.6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+
+  /* Модалка */
+  .modal{position:fixed;inset:0;background:rgba(45,74,62,.5);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;}
+  .modal.open{display:flex;}
+  .modal-box{background:var(--bg);max-width:640px;width:100%;padding:48px;position:relative;}
+  .modal-box h2{font-size:30px;margin-bottom:12px;}
+  .modal-box .close{position:absolute;top:16px;right:20px;background:none;border:none;font-size:28px;cursor:pointer;color:var(--green);line-height:1;}
+  .modal-next{margin-top:24px;}
+  .modal-next h4{color:var(--green);margin-bottom:12px;}
+  .modal-next div{display:flex;gap:12px;align-items:flex-start;padding:8px 0;font-size:14px;}
+  .modal-next b{color:var(--green);min-width:80px;}
+
+  @media(max-width:960px){
+    section{padding:64px 0;}
+    nav.main-nav,.header-phone{display:none;}
+    .burger{display:block;}
+    nav.main-nav.open{display:flex;position:absolute;top:72px;left:0;right:0;background:var(--bg);flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--line);}
+    .about-grid,.calc-grid,.final-grid,.case-cols{grid-template-columns:1fr;gap:40px;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .approach-grid,.portfolio-grid,.reviews-grid{grid-template-columns:1fr;}
+    .packages{grid-template-columns:1fr;}
+    .steps{grid-template-columns:repeat(3,1fr);row-gap:32px;}
+    .steps::before{display:none;}
+    .team-grid{grid-template-columns:1fr;}
+    .case-facts{grid-template-columns:repeat(2,1fr);}
+    .case-box{padding:28px;}
+    .case-compare{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .hero{min-height:80vh;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Шапка -->
+<header>
+  <div class="container header-in">
+    <a href="#" class="logo"><span class="logo-mark">N</span>NORDIC designer</a>
+    <nav class="main-nav" id="nav">
+      <a href="#about">О студии</a>
+      <a href="#services">Услуги</a>
+      <a href="#portfolio">Портфолио</a>
+      <a href="#team">Команда</a>
+      <a href="#faq">Отзывы и FAQ</a>
+    </nav>
+    <a class="header-phone" href="tel:+79000000000">+7 900 000-00-00</a>
+    <a href="#calc" class="btn btn-primary header-cta">Консультация</a>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content reveal">
+      <h1>Дизайн интерьера в скандинавском стиле</h1>
+      <p>Светлый минимализм, натуральные материалы и продуманные решения для квартир и загородных домов.</p>
+      <div class="hero-actions">
+        <a href="#calc" class="btn btn-primary">Рассчитать дизайн-проект</a>
+        <a href="#portfolio" class="btn btn-outline">Смотреть портфолио</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- О студии -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="img/photo-2.jpg" alt="Интерьер в скандинавском стиле">
+      </div>
+      <div class="reveal">
+        <h2 class="section-title">О студии</h2>
+        <p>Ваш дом — наша страсть, скандинавский стиль — наша философия. Мы — команда дизайнеров, влюблённых в светлые, уютные пространства. Используем натуральные материалы и создаём интерьеры, в которых хочется жить.</p>
+        <p style="margin-top:16px;">Мы используем натуральные материалы и создаём светлые, уютные интерьеры, вдохновлённые северной природой. Считаем, что дом должен быть функциональным и приносить радость каждый день.</p>
+      </div>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b data-count="240">0</b><span>проектов</span></div>
+      <div class="stat"><b data-count="12">0</b><span>лет на рынке</span></div>
+      <div class="stat"><b data-count="96">0</b><span>% рекомендаций</span></div>
+      <div class="stat"><b data-count="18">0</b><span>наград</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Подход -->
+<section>
+  <div class="container">
+    <h2 class="section-title reveal">Наш подход к скандинавскому интерьеру</h2>
+    <p class="section-sub reveal">Три принципа, которые мы вкладываем в каждый проект.</p>
+    <div class="approach-grid">
+      <div class="approach-card reveal">
+        <img src="img/photo-3.jpg" alt="Свет и воздух">
+        <div><h3>Свет и воздух</h3><p>Максимум естественного света, светлая база и отсутствие визуального шума.</p></div>
+      </div>
+      <div class="approach-card reveal">
+        <img src="img/photo-4.jpg" alt="Натуральные материалы">
+        <div><h3>Натуральные материалы</h3><p>Дерево, лён, шерсть и камень — материалы, которые дышат и стареют красиво.</p></div>
+      </div>
+      <div class="approach-card reveal">
+        <img src="img/photo-5.jpg" alt="Функциональность">
+        <div><h3>Функциональность</h3><p>Каждый метр работает. Умные системы хранения и продуманные сценарии жизни.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Пакеты -->
+<section id="services">
+  <div class="container">
+    <h2 class="section-title reveal">Услуги и пакеты для вашего проекта</h2>
+    <p class="section-sub reveal">Прозрачные условия и понятный состав работ на каждом этапе.</p>
+    <div class="packages">
+      <div class="package-side reveal">
+        <img src="img/photo-6.jpg" alt="">
+        <img src="img/photo-1.jpg" alt="">
+      </div>
+      <div class="package-main reveal">
+        <h3>Базовый дизайн-проект</h3>
+        <ul>
+          <li>Обмерный план</li>
+          <li>Планировочные решения</li>
+          <li>3D-визуализация</li>
+          <li>Рабочие чертежи</li>
+          <li>Подбор материалов</li>
+          <li>Ведомость отделки</li>
+        </ul>
+        <div class="package-price">от 50 000 ₽</div>
+        <a href="#calc" class="btn btn-primary">Получить детальное предложение</a>
+      </div>
+      <div class="package-side reveal">
+        <img src="img/photo-2.jpg" alt="">
+        <img src="img/photo-3.jpg" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Этапы -->
+<section>
+  <div class="container">
+    <h2 class="section-title reveal">Как мы реализуем ваш проект</h2>
+    <p class="section-sub reveal">Прозрачный пошаговый процесс — от первой встречи до сдачи объекта.</p>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">1</div><h4>Заявка</h4><p>Знакомимся, обсуждаем задачу</p></div>
+      <div class="step"><div class="step-num">2</div><h4>Встреча и бриф</h4><p>Фиксируем пожелания и бюджет</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Концепт и палитра</h4><p>2-3 стилевых направления на выбор</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Чертежи и спецификации</h4><p>Рабочая документация для бригады</p></div>
+      <div class="step"><div class="step-num">5</div><h4>Материалы и 3D</h4><p>Визуализация и подбор материалов</p></div>
+      <div class="step"><div class="step-num">6</div><h4>Контроль реализации</h4><p>Авторский надзор до сдачи</p></div>
+    </div>
+    <div class="supervision reveal">
+      <p><b style="color:var(--green);">Авторский надзор</b> на всём протяжении проекта — контроль соответствия строительных работ дизайн-проекту.</p>
+      <a href="#calc" class="btn btn-outline">Запросить график реализации</a>
+    </div>
+  </div>
+</section>
+
+<!-- Портфолио -->
+<section id="portfolio">
+  <div class="container">
+    <h2 class="section-title reveal">Наше портфолио</h2>
+    <p class="section-sub reveal">Реализованные проекты с честными бюджетами и сроками.</p>
+    <div class="portfolio-grid">
+      <div class="work-card reveal">
+        <img src="img/photo-4.jpg" alt="Квартира 68 м²">
+        <div class="work-body">
+          <h3>Квартира 68 м²</h3>
+          <p>Просторная гостиная, скрытые системы хранения и берёзовый шпон для тёплого света.</p>
+          <div class="work-budget">Бюджет 950 000 ₽</div>
+          <div class="work-actions">
+            <a href="#" class="btn btn-primary">Смотреть кейс</a>
+            <a href="#calc" class="btn btn-outline">Хочу так же</a>
+          </div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="img/photo-5.jpg" alt="Квартира 45 м²">
+        <div class="work-body">
+          <h3>Квартира 45 м²</h3>
+          <p>Светлая спальня с текстилем ручной работы и встроенная подсветка по периметру.</p>
+          <div class="work-budget">Бюджет 870 000 ₽</div>
+          <div class="work-actions">
+            <a href="#" class="btn btn-primary">Смотреть кейс</a>
+            <a href="#calc" class="btn btn-outline">Хочу так же</a>
+          </div>
+        </div>
+      </div>
+      <div class="work-card reveal">
+        <img src="img/photo-6.jpg" alt="Загородный дом">
+        <div class="work-body">
+          <h3>Загородный дом</h3>
+          <p>Тёплый семейный интерьер с камином, натуральным камнем и панорамными окнами.</p>
+          <div class="work-budget">Бюджет 3 300 000 ₽</div>
+          <div class="work-actions">
+            <a href="#" class="btn btn-primary">Смотреть кейс</a>
+            <a href="#calc" class="btn btn-outline">Хочу так же</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Кейс месяца -->
+<section>
+  <div class="container">
+    <h2 class="section-title reveal">Кейс месяца</h2>
+    <p class="section-sub reveal">Скандинавский интерьер, который дышит.</p>
+    <div class="case-box reveal">
+      <div class="case-compare">
+        <figure><img src="img/photo-1.jpg" alt="До"><figcaption>До</figcaption></figure>
+        <figure><img src="img/photo-2.jpg" alt="После"><figcaption>После</figcaption></figure>
+      </div>
+      <div class="case-facts">
+        <div><b>52 м²</b><span>площадь</span></div>
+        <div><b>580 тыс. ₽</b><span>бюджет</span></div>
+        <div><b>2,5 мес</b><span>срок</span></div>
+        <div><b>Квартира</b><span>тип объекта</span></div>
+      </div>
+      <div class="case-cols">
+        <div>
+          <h4>Задача</h4>
+          <ul><li>Сделать тёмную квартиру светлее без перепланировки</li><li>Добавить места хранения, не «съев» метраж</li><li>Уложиться в бюджет и сжатые сроки</li></ul>
+          <h4 style="margin-top:20px;">Что было сделано</h4>
+          <ul><li>Светлая отделка и паркетная доска</li><li>Зеркала для визуального расширения</li><li>Встроенная подсветка и тёплые светильники</li></ul>
+        </div>
+        <div>
+          <h4>Решение</h4>
+          <p>Мы сохранили планировку, но изменили восприятие пространства: светлая база, скрытые двери, текстиль в тёплых тонах. Интерьер стал воздушным — казалось бы, квартира прибавила десять метров.</p>
+          <h4 style="margin-top:20px;">Результат</h4>
+          <p>Светлый, функциональный интерьер в скандинавском стиле, в котором комфортно жить семье с ребёнком.</p>
+          <a href="#calc" class="btn btn-primary" style="margin-top:20px;">Запросить такой проект</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Отзывы -->
+<section>
+  <div class="container">
+    <h2 class="section-title reveal">Реальные истории наших клиентов</h2>
+    <p class="section-sub reveal">Каждый проект — это чья-то жизнь, ставшая светлее и удобнее.</p>
+    <div class="reviews-grid">
+      <div class="review reveal">
+        <img src="img/photo-3.jpg" alt="">
+        <div class="review-body">
+          <p>«Квартира стала светлее и просторнее. Очень довольны результатом и общением с командой.»</p>
+          <span class="review-author">Марина, Сокольники, 68 м²</span>
+        </div>
+      </div>
+      <div class="review reveal">
+        <img src="img/photo-4.jpg" alt="">
+        <div class="review-body">
+          <p>«Нам предложили продуманное решение: много света, тёплые материалы и уют. Рекомендуем!»</p>
+          <span class="review-author">Игорь и Ольга, Химки, 45 м²</span>
+        </div>
+      </div>
+      <div class="review reveal">
+        <img src="img/photo-5.jpg" alt="">
+        <div class="review-body">
+          <p>«Всё сделали в срок и с вниманием к деталям. Дом стал местом силы для всей семьи.»</p>
+          <span class="review-author">Елена, Истра, загородный дом</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Форма расчёта -->
+<section id="calc">
+  <div class="container">
+    <div class="calc-grid">
+      <div class="reveal">
+        <h2 class="section-title">Рассчитаем стоимость вашего проекта за 1 день</h2>
+        <ul class="calc-list">
+          <li>Предварительную смету под ваш метраж</li>
+          <li>Рекомендации по планировке</li>
+          <li>Ответы на вопросы о сроках и этапах работы</li>
+        </ul>
+        <p class="calc-note">Оставьте заявку — перезвоним в течение 1 часа в рабочее время (с 8:00 до 18:00). Это бесплатно и ни к чему не обязывает.</p>
+      </div>
+      <form class="calc-form reveal" onsubmit="event.preventDefault();openModal();">
+        <div class="field"><label>Имя</label><input type="text" required placeholder="Как к вам обращаться"></div>
+        <div class="field"><label>Телефон</label><input type="tel" required placeholder="+7 (___) ___-__-__"></div>
+        <div class="field"><label>Тип объекта</label>
+          <select><option>Квартира</option><option>Загородный дом</option><option>Коммерческое помещение</option></select>
+        </div>
+        <div class="field"><label>Площадь, м²</label><input type="number" min="10" placeholder="Например, 68"></div>
+        <button class="btn btn-primary" type="submit" style="width:100%;">Рассчитать стоимость</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Команда -->
+<section id="team">
+  <div class="container">
+    <h2 class="section-title reveal">Кто создаёт ваш идеальный интерьер</h2>
+    <p class="section-sub reveal">Команда, влюблённая в скандинавский дизайн.</p>
+    <div class="team-grid">
+      <div class="member reveal">
+        <img src="img/photo-6.jpg" alt="Анна Соколова">
+        <div>
+          <h3>Анна Соколова</h3>
+          <div class="role">Ведущий дизайнер</div>
+          <p>Проектов: 60+ · Стаж 9 лет<br>Специализация: квартиры 30–90 м², загородные дома</p>
+        </div>
+      </div>
+      <div class="member reveal">
+        <img src="img/photo-1.jpg" alt="Дмитрий Белов">
+        <div>
+          <h3>Дмитрий Белов</h3>
+          <div class="role">Архитектор-проектировщик</div>
+          <p>Проектов: 80+ · Стаж 11 лет<br>Специализация: перепланировки, инженерные решения</p>
+        </div>
+      </div>
+      <div class="member reveal">
+        <img src="img/photo-2.jpg" alt="Екатерина Миронова">
+        <div>
+          <h3>Екатерина Миронова</h3>
+          <div class="role">Дизайнер материалов</div>
+          <p>Проектов: 70+ · Стаж 8 лет<br>Специализация: световые решения, подбор материалов</p>
+        </div>
+      </div>
+      <div class="member reveal">
+        <img src="img/photo-3.jpg" alt="Михаил Орлов">
+        <div>
+          <h3>Михаил Орлов</h3>
+          <div class="role">Руководитель проектов</div>
+          <p>Проектов: 70+ · Стаж 10 лет<br>Специализация: управление сроками, контроль бюджета</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA полоса -->
+<section class="cta-strip reveal">
+  <div class="container">
+    <h2>Нравится наш подход к вашему уюту?</h2>
+    <p>Для вас — бесплатная консультация с ведущим дизайнером.</p>
+    <a href="#calc" class="btn">Записаться на консультацию</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title reveal" style="text-align:center;">Всё, что вы хотели узнать о работе с нами</h2>
+    <p class="section-sub reveal" style="margin:0 auto 40px;text-align:center;">Прозрачность на каждом этапе — от первой консультации до сдачи проекта.</p>
+    <div class="faq reveal">
+      <div class="faq-item"><button class="faq-q">Какие регионы вы обслуживаете?</button><div class="faq-a"><p>Работаем в Москве, Московской области и с проектами «под ключ» в других регионах — в онлайн-формате.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Сколько стоит дизайн-проект?</button><div class="faq-a"><p>Базовый дизайн-проект — от 50 000 ₽. Точная смета зависит от метража и состава работ; её мы готовим бесплатно в течение 1 дня.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Как долго длится разработка дизайн-проекта?</button><div class="faq-a"><p>От 14 до 45 рабочих дней в зависимости от площади и пакета услуг.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Что входит в базовый дизайн-проект?</button><div class="faq-a"><p>Обмерный план, планировочные решения, 3D-визуализация, рабочие чертежи, подбор материалов и ведомость отделки.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Вы работаете только в скандинавском стиле?</button><div class="faq-a"><p>Это наша основная специализация, но мы делаем и другие интерьеры в светлой, сдержанной эстетике.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Что, если мне не понравится результат? Есть ли гарантия?</button><div class="faq-a"><p>На этапе концепта мы согласовываем стиль до начала разработки. Все правки до финального утверждения — бесплатны.</p></div></div>
+      <div class="faq-item"><button class="faq-q">Как проходит коммуникация?</button><div class="faq-a"><p>Личный менеджер, чат проекта и еженедельные статус-звонки. Вы всегда знаете, на каком этапе находится проект.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Финальная форма -->
+<section>
+  <div class="container">
+    <div class="final-grid">
+      <div class="reveal">
+        <h2 class="section-title">Остались вопросы?</h2>
+        <p style="margin-bottom:24px;">Заполните форму ниже, мы свяжемся с вами в течение 1 часа в рабочее время (с 8:00 до 18:00).</p>
+        <form class="calc-form" onsubmit="event.preventDefault();openModal();">
+          <div class="field"><label>Ваше имя</label><input type="text" required placeholder="Имя"></div>
+          <div class="field"><label>Телефон или email</label><input type="text" required placeholder="Как с вами связаться"></div>
+          <div class="field"><label>Текст вопроса</label><textarea rows="3" placeholder="Опишите вашу задачу"></textarea></div>
+          <button class="btn btn-primary" type="submit" style="width:100%;">Задать вопрос</button>
+        </form>
+      </div>
+      <img class="reveal" src="img/photo-4.jpg" alt="Интерьер">
+    </div>
+  </div>
+</section>
+
+<!-- Футер -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="logo"><span class="logo-mark">N</span>NORDIC designer</a>
+        <p style="margin-top:16px;font-size:14px;opacity:.85;max-width:280px;">Дизайн интерьеров в скандинавском стиле. Свет, воздух и натуральные материалы.</p>
+      </div>
+      <div>
+        <h4>Меню</h4>
+        <a href="#about">О студии</a>
+        <a href="#services">Услуги</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#team">Команда</a>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <a href="tel:+79000000000">+7 900 000-00-00</a>
+        <a href="mailto:hello@nordic-designer.ru">hello@nordic-designer.ru</a>
+        <a href="#">Москва, ул. Северная, 12</a>
+      </div>
+      <div>
+        <h4>Соцсети</h4>
+        <a href="#">Telegram</a>
+        <a href="#">VK</a>
+        <a href="#">Pinterest</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NORDIC designer. Демо-лендинг.</span>
+      <span>Сделано по скиллу scandi-premium-landing</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Модалка «Спасибо» -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2>Спасибо!<br>Ваш запрос принят</h2>
+    <p>Мы уже начали работу над расчётом стоимости вашего проекта. В ближайшее время вы получите сообщение с деталями.</p>
+    <div class="modal-next">
+      <h4>Что произойдёт дальше?</h4>
+      <div><b>Анализ</b><span>Мы изучим ваши пожелания и подготовим расчёт под ваш метраж и задачи.</span></div>
+      <div><b>Расчёт</b><span>Подготовим предварительную смету и сроки в рабочем дне.</span></div>
+      <div><b>Связь</b><span>Менеджер свяжется с вами и ответит на вопросы детально.</span></div>
+    </div>
+    <a href="#portfolio" class="btn btn-primary" style="margin-top:24px;" onclick="closeModal()">Смотреть портфолио</a>
+  </div>
+</div>
+
+<script>
+  // Плавное появление блоков
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Счётчики цифр
+  const counterIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count, dur = 1400, t0 = performance.now();
+      (function tick(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        el.textContent = '+' + Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+      counterIO.unobserve(el);
+    });
+  }, { threshold: .6 });
+  document.querySelectorAll('[data-count]').forEach(el => counterIO.observe(el));
+
+  // FAQ-аккордеон
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement, wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-a').style.maxHeight = null; });
+      if (!wasOpen) { item.classList.add('open'); const a = item.querySelector('.faq-a'); a.style.maxHeight = a.scrollHeight + 'px'; }
+    });
+  });
+
+  // Модалка
+  function openModal() { document.getElementById('modal').classList.add('open'); }
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+  document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+  // Бургер-меню
+  document.getElementById('burger').addEventListener('click', () => document.getElementById('nav').classList.toggle('open'));
+</script>
+</body>
+</html>
